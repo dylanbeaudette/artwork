@@ -26,24 +26,35 @@ logEq <- function(x0=.1, r=2, n=10){
   
 }
 
+
 .gzip <- function(i) {
-  length(memCompress(as.character(i), type = 'gzip'))
+  length(memCompress(paste(as.character(i), collapse = ''), type = 'gzip'))
 }
 
 # plot the system's final values for different values of r
 r <- seq(from = 1, to = 4, by = 0.015)
 x <- sapply(r, logEq, x0 = 0.01, n = 200)
 
-
-
 gz <- apply(x, 1, .gzip)
 e <- ecdf(gz)
+
+
+## TODO: try again, color using Lyapunov exponent
+# https://en.wikipedia.org/wiki/Lyapunov_exponent
+lyapunov <- function(x, r) sum(log2(abs(r*(1-2*x))))/length(x)
+
+l <- rep(NA, length(r))
+for(i in 1:length(l)) l[i] <- lyapunov(x = x[,i], r = r[i])
+e.le <- ecdf(l)
+
 
 .colors <- hcl.colors(n = 100, 'zissou1', rev = FALSE)
 # .colors <- met.brewer('Hiroshige', n = 100, direction = -1)
 
 cr <- colorRamp(.colors, space = 'Lab', interpolate = 'spline')
 .cols <- rgb(cr(e(gz)), maxColorValue = 255, alpha = 200)
+
+# .cols <- rgb(cr(e.le(l)), maxColorValue = 255, alpha = 200)
 
 par(mar = c(0, 0, 0, 0), bg = 'black', fg = 'white')
 plot(
