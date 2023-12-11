@@ -1,4 +1,5 @@
 # devtools::load_all()
+library(aqp)
 
 .npanel <- 4
 
@@ -60,6 +61,10 @@ for(i in seq(0, 0.5, length.out = .npanel^2)) {
 }
 
 
+svglite::svglite(filename = 'e:/temp/electro.svg', width = 7, height = 3.5, bg = 'transparent')
+
+par(mar = c(0.1, 0.1, 0.1, 0.1), mfrow = c(.npanel, .npanel))
+
 
 for(i in seq(0, 0.5, length.out = .npanel^2)) {
   
@@ -73,12 +78,14 @@ for(i in seq(0, 0.5, length.out = .npanel^2)) {
   z <- fixOverlap(x, thresh = 2, q = 1, chargeDecay = 0.05, QkA_GrowthRate = i, method = 'E', maxIter = 100, trace = TRUE)
   .n <- nrow(z$states)
   
-  matplot(rbind(x, z$states), type = 'l', lty = 1, las = 1, axes = FALSE, col = cols, lwd = 1, log = 'x')
+  matplot(rbind(x, z$states), type = 'l', lty = 1, las = 1, axes = FALSE, col = cols, lwd = 1, log = 'x', xlab = '', ylab = '')
   
   # points(x = rep(1, times = length(x)), y = x, cex = 0.66, pch = 16, col = cols)
   # points(x = rep(.n + 1, times = length(x)), y = z$states[.n, ], cex = 0.66, pch = 16, col = cols)
   
 }
+
+dev.off()
 
 
 ## threshold effect
