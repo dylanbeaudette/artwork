@@ -1,4 +1,6 @@
 
+# Thanks to Nate Roe for suggesting the name, and entertaining my odd outbursts of "artistic" expression.
+
 library(aqp)
 library(showtext)
 library(lattice)
