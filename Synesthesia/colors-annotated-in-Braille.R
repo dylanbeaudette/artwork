@@ -8,10 +8,18 @@
 # ask about embossing printers
 # https://www.usda.gov/our-agency/staff-offices/office-communications-oc/printing-services
 
+##
+# https://louis.aph.org/
+# https://www.afb.org/about-afb/contact-afb
+
+
+
 library(aqp)
 library(sharpshootR)
 library(showtext)
 library(lattice)
+library(svglite)
+
 
 # remotes::install_github("JosephCrispell/basicPlotteR")
 library(basicPlotteR)
@@ -21,11 +29,31 @@ font_add('BRAILLE1', regular = 'BRAILLE1.ttf')
 showtext_auto()
 
 
+par(mar = c(1, 1, 1, 1), family = 'sans', bg = 'black', fg = 'white')
+
 par(mar = c(1, 1, 1, 1), family = 'BRAILLE1', bg = 'black', fg = 'white')
+
+# par(mfcol = c(1, 2),mar = c(1, 1, 1, 1), family = 'sans', bg = 'black', fg = 'white')
 
 huePositionCircle(chip.cex = 8.5, label.cex = 0.9)
 
 huePositionPlot()
+
+
+
+
+svglite(filename = 'e:/working_copies/ncss-tech.github.io/AQP/SVG-examples/munsell-hues-braille.svg', width = 10, height = 10, bg = 'transparent')
+
+font_add('BRAILLE1', regular = 'BRAILLE1.ttf')
+showtext_auto()
+
+par(mar = c(1, 1, 1, 1), family = 'BRAILLE1')
+
+huePositionCircle(chip.cex = 8, label.cex = 0.75)
+
+dev.off()
+
+
 
 
 ## Munsell -> CIELAB charts
