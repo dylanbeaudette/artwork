@@ -1,7 +1,15 @@
 
 # Thanks to Nate Roe for suggesting the name, and entertaining my odd outbursts of "artistic" expression.
 
+# Maybe this is more useful than originally joked about.
+
+# https://pubmed.ncbi.nlm.nih.gov/6965723/
+
+# ask about embossing printers
+# https://www.usda.gov/our-agency/staff-offices/office-communications-oc/printing-services
+
 library(aqp)
+library(sharpshootR)
 library(showtext)
 library(lattice)
 
@@ -11,6 +19,13 @@ library(basicPlotteR)
 font_add('BRAILLE1', regular = 'BRAILLE1.ttf')
 
 showtext_auto()
+
+
+par(mar = c(1, 1, 1, 1), family = 'BRAILLE1', bg = 'black', fg = 'white')
+
+huePositionCircle(chip.cex = 8.5, label.cex = 0.9)
+
+huePositionPlot()
 
 
 ## Munsell -> CIELAB charts
@@ -41,12 +56,12 @@ d$lab.text <- with(d, paste(round(L), round(A), round(B), sep='\n'))
 data("munsell")
 data("soil_minerals")
 
-x <- munsell[which(munsell$value == 4 & munsell$chroma == 6), ]
+x <- munsell[which(munsell$value == 6 & munsell$chroma == 6), ]
 
 x.1 <- subset(munsell, subset=hue == '10YR' & value == 2 & chroma  == 2)
 x.2 <- subset(munsell, subset=hue == '7.5YR' & value == 3 & chroma  == 4)
 
-
+par(mar = c(0, 0, 0, 0), family = 'BRAILLE1')
 
 plot(B ~ A, data=x, type='n', las=1, asp = 1)
 grid()
