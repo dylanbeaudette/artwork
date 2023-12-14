@@ -35,7 +35,7 @@ par(mar = c(1, 1, 1, 1), family = 'BRAILLE1', bg = 'black', fg = 'white')
 
 # par(mfcol = c(1, 2),mar = c(1, 1, 1, 1), family = 'sans', bg = 'black', fg = 'white')
 
-huePositionCircle(chip.cex = 8.5, label.cex = 0.9)
+huePositionCircle(chip.cex = 7.5, label.cex = 0.8)
 
 huePositionPlot()
 
