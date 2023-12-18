@@ -1,4 +1,4 @@
-# devtools::load_all()
+library(aqp)
 
 library(MetBrewer)
 
@@ -25,6 +25,10 @@ par(mar = c(0.1, 0.1, 0.1, 0.1), bg = 'black', fg = 'white', mfrow = c(.npanel, 
 
 ## PDF output
 pdf(file = 'decent-into-madness.pdf', width = 12, height = 8)
+par(mar = c(0.1, 0.1, 0.1, 0.1), mfrow = c(.npanel, .npanel))
+
+## PDF output
+svglite::svglite(filename = 'decent-into-madness.svg', width = 12, height = 8)
 par(mar = c(0.1, 0.1, 0.1, 0.1), mfrow = c(.npanel, .npanel))
 
 

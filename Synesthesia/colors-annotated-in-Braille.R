@@ -45,6 +45,8 @@ huePositionPlot()
 svglite(filename = 'e:/working_copies/ncss-tech.github.io/AQP/SVG-examples/munsell-hues-braille.svg', width = 10, height = 10, bg = 'transparent')
 
 font_add('BRAILLE1', regular = 'BRAILLE1.ttf')
+font_add('morse', regular = 'MorseTech-n4E4.ttf')
+
 showtext_auto()
 
 par(mar = c(1, 1, 1, 1), family = 'BRAILLE1')
@@ -54,6 +56,24 @@ huePositionCircle(chip.cex = 8, label.cex = 0.75)
 dev.off()
 
 
+.f <- list(fontfamily = 'BRAILLE1')
+tps <- list(
+  par.xlab.text = .f,
+  par.ylab.text = .f,
+  axis.text = .f,
+  par.sub.text = .f,
+  add.text = .f,
+  par.main.text = .f
+)
+
+trellis.par.set(tps)
+contrastChart('10YR 3/3', hues = c('10YR', '5Y'), ccAbbreviate = 0, de00.cex = 0.8)
+
+colorChart(c('N2/', '10YR 3/3', '5YR 4/6', '10PB 6/6', '10YR 3/4'))
+
+
+par(family = 'BRAILLE1')
+huePositionPlot(value = 4, chroma = 6, chip.cex = 6, label.cex = 0.65, contour.dE00 = TRUE, origin = '10YR 3/3')
 
 
 ## Munsell -> CIELAB charts
@@ -161,34 +181,6 @@ addTextLabels(x$A, x$B, x$hue, cex.label = 0.7, col.background=rgb(0,0,0, 0.1), 
 
 
 
-
-
-x <- munsell[which(munsell$value == 3), ]
-plot(B ~ A, data=x, col=rgb(x$r, x$g, x$b, maxColorValue = 1), pch=15, cex=2)
-
-x <- munsell
-plot(B ~ A, data=x, col=rgb(x$r, x$g, x$b, maxColorValue = 1), pch=15, cex=1)
-
-
-
-
-
-
-plot(B ~ A, data=munsell, type='n')
-points(B ~ A, data=x.1, col=rgb(x.1$r, x.1$g, x.1$b, maxColorValue = 1), pch=15, cex=4)
-points(B ~ A, data=x.2, col=rgb(x.2$r, x.2$g, x.2$b, maxColorValue = 1), pch=15, cex=4)
-
-plot(B ~ A, data=x, col=rgb(x$r, x$g, x$b, maxColorValue = 1), pch=15, cex=2)
-points(B ~ A, data=x.1, col=rgb(x.1$r, x.1$g, x.1$b, maxColorValue = 1), pch=15, cex=4)
-points(B ~ A, data=x.2, col=rgb(x.2$r, x.2$g, x.2$b, maxColorValue = 1), pch=15, cex=4)
-
-plot(L ~ A, data=x, col=rgb(x$r, x$g, x$b, maxColorValue = 1), pch=15, cex=2)
-points(L ~ A, data=x.1, col=rgb(x.1$r, x.1$g, x.1$b, maxColorValue = 1), pch=15, cex=4)
-points(L ~ A, data=x.2, col=rgb(x.2$r, x.2$g, x.2$b, maxColorValue = 1), pch=15, cex=4)
-
-plot(L ~ B, data=x, col=rgb(x$r, x$g, x$b, maxColorValue = 1), pch=15, cex=2)
-points(L ~ B, data=x.1, col=rgb(x.1$r, x.1$g, x.1$b, maxColorValue = 1), pch=15, cex=4)
-points(L ~ B, data=x.2, col=rgb(x.2$r, x.2$g, x.2$b, maxColorValue = 1), pch=15, cex=4)
 
 
 
