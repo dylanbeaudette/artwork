@@ -69,6 +69,9 @@ tps <- list(
 trellis.par.set(tps)
 contrastChart('10YR 3/3', hues = c('10YR', '5Y'), ccAbbreviate = 0, de00.cex = 0.8)
 
+contrastChart('10YR 3/3', hues = c('10YR', '5Y'), ccAbbreviate = 0, de00.cex = 0)
+
+
 colorChart(c('N2/', '10YR 3/3', '5YR 4/6', '10PB 6/6', '10YR 3/4'))
 
 
