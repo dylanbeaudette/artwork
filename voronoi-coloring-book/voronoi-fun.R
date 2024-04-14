@@ -16,7 +16,7 @@ p <- as.numeric(p)
 
 plot(p)
 
-s <- spatSample(p, size = 50, as.points = TRUE, method = 'stratified')
+s <- spatSample(p, size = 5, as.points = TRUE, method = 'stratified')
 
 plot(s, mar = c(0, 0, 0, 0))
 
@@ -39,11 +39,15 @@ plot(p, mar = c(0, 0, 0, 0))
 lines(d)
 
 
+s <- spatSample(v, size = 5, method = 'stratified')
+
+
+
+
 # https://dfriend21.github.io/quadtree/index.html
 
 library(quadtree)
-library(raster)
-qt <- quadtree(raster(x), split_threshold = 2, split_method = "sd", adj_type = "resample",  resample_n_side = 128)
+qt <- quadtree(x, split_threshold = 2, split_method = "sd", adj_type = "resample",  resample_n_side = 128)
 
 par(mar = c(0, 0, 0, 0))
 plot(qt, axes = FALSE, xlab = '', ylab = '', legend = FALSE, border_col = 'black', na_col = 'white', crop = TRUE, col = NA)

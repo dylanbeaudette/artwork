@@ -112,20 +112,30 @@ slantedTree(rtree(50, equiprob = FALSE), h = 0.03)
 slantedTree(pbtree(n = 50, scale = 2), h = 0.02)
 
 
-.n <- 36
+.n <- 16
 .nsim <- 25
 par(mfcol = c(sqrt(.n), sqrt(.n)), fg = 'white', bg = 'black')
 
 for(i in 1:.n) {
-  slantedTree(pbtree(n = .nsim, scale = 1, b = 10, d = 1), h = 0.03, direction = 'upwards')
+  slantedTree(pbtree(n = .nsim, scale = 1, b = 10, d = 1), h = 0.06, direction = 'upwards')
 }
 
 for(i in 1:.n) {
-  slantedTree(rtree(.nsim, equiprob = FALSE), h = 0.03, direction = 'upwards')
+  slantedTree(rtree(.nsim, equiprob = FALSE), h = 0.06, direction = 'upwards')
 }
 
 for(i in 1:.n) {
-  slantedTree(rcoal(n = .nsim, br = 1), h = 0.03, direction = 'upwards')
+  slantedTree(rtree(.nsim, equiprob = TRUE), h = 0.06, direction = 'upwards')
+}
+
+for(i in 1:.n) {
+  slantedTree(rtree(.nsim, br = 1), h = 0.06, direction = 'upwards')
+}
+
+
+
+for(i in 1:.n) {
+  slantedTree(rcoal(n = .nsim, br = 1), h = 0.06, direction = 'upwards')
 }
 
 
