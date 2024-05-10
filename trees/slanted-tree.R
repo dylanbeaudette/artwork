@@ -133,10 +133,15 @@ for(i in 1:.n) {
 }
 
 
+svglite::svglite(file = 'slanted-trees.svg', width = 5, height = 4)
+
+par(mfcol = c(sqrt(.n), sqrt(.n)), fg = 'white', bg = 'black')
+
 
 for(i in 1:.n) {
   slantedTree(rcoal(n = .nsim, br = 1), h = 0.06, direction = 'upwards')
 }
 
+dev.off()
 
 
