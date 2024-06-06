@@ -7,6 +7,15 @@ library(elevatr)
 # https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.47387,-102.12719,z13
 # TX069
 bb <- '-102.2633 34.4032,-102.2633 34.5341,-102.0142 34.5341,-102.0142 34.4032,-102.2633 34.4032'
+
+
+# another interesting region nearby
+# https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.53435,-101.25026,z14
+bb <- '-101.3237 34.5037,-101.3237 34.5711,-101.1752 34.5711,-101.1752 34.5037,-101.3237 34.5037'
+
+
+
+
 wkt <- sprintf("POLYGON((%s))", bb)
 a <- vect(wkt, crs = 'epsg:4326')
 
@@ -20,13 +29,16 @@ m <- mukey.wcs(a, db = 'gSSURGO')
 rat <- cats(m)[[1]]
 
 # variables of interest
-vars <- c("sandtotal_r","silttotal_r","claytotal_r")
+vars <- c("sandtotal_r", "silttotal_r", "claytotal_r")
 
 p <-  get_SDA_property(property = vars,
                        method = "Dominant Component (Numeric)", 
                        mukeys = as.integer(rat$mukey),
-                       top_depth = 25,
-                       bottom_depth = 50)
+                       top_depth = 0,
+                       bottom_depth = 25, 
+                       include_minors = TRUE, 
+                       miscellaneous_areas = FALSE
+                       )
 
 # merge aggregate soil data into RAT
 rat <- merge(rat, p, by.x = 'mukey', by.y = 'mukey', sort = FALSE, all.x = TRUE)
@@ -48,7 +60,7 @@ values(texture.class) <- ssc_to_texcl(
   droplevels = FALSE
 )
 
-plot(texture.class, col = hcl.colors(50), axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 25-50cm (RV)', mar = c(1, 1, 3, 2))
+plot(texture.class, col = hcl.colors(50), axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (RV)', mar = c(1, 1, 3, 2))
 
 
 texture.rat <- read.csv('http://casoilresource.lawr.ucdavis.edu/800m_grids/RAT/texture_05.csv')
@@ -62,18 +74,18 @@ rat <- rat[, c('value', 'label', 'names', 'hex')]
 
 levels(texture.rat) <- rat
 
-plot(texture.class, col = hcl.colors(50), axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 25-50cm (RV)', mar = c(1, 1, 3, 2))
+plot(texture.class, col = hcl.colors(50), axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (RV)', mar = c(1, 1, 3, 2))
 
 coltab(texture.class)
 # coltab(texture.class) <- NULL
 
 coltab(texture.class) <- rat[, c('value', 'hex')]
 
-plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 25-50cm (RV)', mar = c(1, 1, 3, 2))
+plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (RV)', mar = c(1, 1, 3, 2))
 
 par(mfcol = c(1, 2))
-plot(texture_2550cm, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nWeighted Mean, 25-50cm (ISSR-800)', mar = c(1, 1, 1, 4))
-plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 25-50cm (SSURGO)', mar = c(1, 1, 1, 4))
+plot(texture_2550cm, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nWeighted Mean, 0-25cm (ISSR-800)', mar = c(1, 1, 1, 4))
+plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (SSURGO)', mar = c(1, 1, 1, 4))
 
 
 
@@ -95,7 +107,7 @@ ee <- project(e, m, method = 'cubicspline', mask = TRUE)
 par(mfcol = c(1, 2))
 
 plot(ee, col = hcl.colors(50, palette = 'mako'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(1, 1, 1, 4))
-plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 25-50cm (SSURGO)', mar = c(1, 1, 1, 4))
+plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (SSURGO)', mar = c(1, 1, 1, 4))
 
 par(mfcol = c(1, 1), bg = 'black', fg = 'white')
 plot(ee, col = hcl.colors(50, palette = 'mako'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
@@ -108,7 +120,7 @@ plot(ee, col = hcl.colors(50, palette = 'spectral'), axes = FALSE, main = 'Eleva
 v <- as.contour(ee, levels = quantile(values(ee), na.rm = TRUE, prob = seq(0, 1, by = 0.02)))
 
 par(mfcol = c(1, 1), bg = 'black')
-plot(v, col = hcl.colors(n = nrow(v), palette = 'zissou1'), mar = c(0, 0, 0, 0), lwd = 1, axes = FALSE)
+plot(v, col = hcl.colors(n = nrow(v), palette = 'zissou1'), mar = c(0, 0, 0, 0), lwd = 2, axes = FALSE)
 
 ex <- as.polygons(ext(v))
 lines(ex, col = 'white', lwd = 0.5)

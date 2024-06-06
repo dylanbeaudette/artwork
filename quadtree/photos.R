@@ -14,4 +14,11 @@ plot(qt, border_lwd = 0.1, axes = FALSE, col = hcl.colors(n = 100, palette = 'ma
 plot(qt, border_lwd = 0.5, axes = FALSE, col = NA, xlab = '', ylab = '', crop = TRUE, border_col = 'white', na_col = NA, legend = FALSE)
 
 
+s <- spatSample(e, size = 100, method = 'random', as.points = TRUE)
+v <- voronoi(s)
 
+plot(e)
+lines(v)
+points(s)
+
+plot(s)

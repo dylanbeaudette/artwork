@@ -6,9 +6,14 @@ library(corrplot)
 # https://github.com/colinmorris/pejorative-compounds
 
 
-x <- read.csv('https://raw.githubusercontent.com/colinmorris/pejorative-compounds/master/counts.csv')
-x$pre <- factor(x$pre)
-x$suff <- factor(x$suff)
+# x <- read.csv('https://raw.githubusercontent.com/colinmorris/pejorative-compounds/master/counts.csv')
+# x$pre <- factor(x$pre)
+# x$suff <- factor(x$suff)
+# 
+# saveRDS(x, file = 'counts.rds')
+
+x <- readRDS('counts.rds')
+
 
 m <- dcast(x, pre ~ suff, value.var = 'count')
 
@@ -84,14 +89,14 @@ corrplot(
   log1p(mm.no.zero[row.idx, col.idx]), 
   col = hcl.colors(50, palette = 'zissou1'), 
   is.corr = FALSE, 
-  col.lim = range(log1p(mm), na.rm = TRUE), 
+  col.lim = range(log1p(mm.no.zero), na.rm = TRUE), 
   method = "color", 
   order = "original",
   diag = TRUE,
   tl.cex = 0.66,
   tl.col = 'white',
   mar = c(0.1, 0, 0, 0.8),
-  addgrid = FALSE,
+  addgrid = FALSE, na.label = '.', na.label.col = 'white'
 ) 
 
 
@@ -101,17 +106,17 @@ row.idx <- order(ca$row$coord[, 1])
 col.idx <- order(ca$col$coord[, 1])
 
 corrplot(
-  log1p(mm[row.idx, col.idx]), 
+  log1p(mm.no.zero[row.idx, col.idx]), 
   col = hcl.colors(50, palette = 'zissou1'), 
   is.corr = FALSE, 
-  col.lim = range(log1p(mm), na.rm = TRUE), 
+  col.lim = range(log1p(mm.no.zero), na.rm = TRUE), 
   method = "color", 
   order = "original",
   diag = TRUE,
   tl.cex = 0.8,
   tl.col = 'white',
   mar = c(0.1, 0, 0, 0.8),
-  addgrid = FALSE,
+  addgrid = FALSE, na.label = '.', na.label.col = 'white'
 ) 
 
 # how do you suppress text labels?
