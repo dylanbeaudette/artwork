@@ -1,3 +1,8 @@
+
+## paper from Zamir:
+# https://www.sciencedirect.com/science/article/pii/S0140196310001849
+
+
 library(aqp)
 library(terra)
 library(soilDB)
@@ -5,6 +10,8 @@ library(elevatr)
 
 # https://casoilresource.lawr.ucdavis.edu/soil-properties/?prop=texture_025&lat=34.3774&lon=-101.7197&z=9
 # https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.47387,-102.12719,z13
+# https://soilmap2-1.lawr.ucdavis.edu/mike/soilweb/taxa-grid/?lat=34.47387&lon=-102.12719&zoom=9&taxa=vertisols
+
 # TX069
 bb <- '-102.2633 34.4032,-102.2633 34.5341,-102.0142 34.5341,-102.0142 34.4032,-102.2633 34.4032'
 
@@ -81,7 +88,7 @@ coltab(texture.class)
 
 coltab(texture.class) <- rat[, c('value', 'hex')]
 
-plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (RV)', mar = c(1, 1, 3, 2))
+plot(texture.class, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nDominant Component, 0-25cm (RV)', mar = c(1, 1, 3, 4), plg = list(cex = 2))
 
 par(mfcol = c(1, 2))
 plot(texture_2550cm, axes = FALSE, main = 'Soil Texture Class <2mm Fraction\nWeighted Mean, 0-25cm (ISSR-800)', mar = c(1, 1, 1, 4))
@@ -114,10 +121,22 @@ plot(ee, col = hcl.colors(50, palette = 'mako'), axes = FALSE, main = 'Elevation
 
 plot(ee, col = hcl.colors(50, palette = 'spectral'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
 
+plot(ee, col = hcl.colors(50, palette = 'blues3'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
+
+plot(ee, col = hcl.colors(50, palette = 'oslo', rev = TRUE), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
+
+
+# ragg::agg_png(filename = 'e:/temp/terrain.png', width = 2560, height = 1440)
+# 
+# plot(ee, col = hcl.colors(50, palette = 'oslo'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE, maxcel = ncell(ee))
+# 
+# dev.off()
+
+
 
 ## feeling artistic...
 
-v <- as.contour(ee, levels = quantile(values(ee), na.rm = TRUE, prob = seq(0, 1, by = 0.02)))
+v <- as.contour(ee, levels = quantile(values(ee), na.rm = TRUE, prob = seq(0, 1, by = 0.025)))
 
 par(mfcol = c(1, 1), bg = 'black')
 plot(v, col = hcl.colors(n = nrow(v), palette = 'zissou1'), mar = c(0, 0, 0, 0), lwd = 2, axes = FALSE)
@@ -127,5 +146,10 @@ lines(ex, col = 'white', lwd = 0.5)
 
 
 par(mfcol = c(1, 1), bg = 'black', fg = 'white')
-plot(ee, col = hcl.colors(50, palette = 'mako'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
-lines(v, col = 'white', lwd = 0.5)
+plot(ee, col = hcl.colors(50, palette = 'oslo', rev = TRUE), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
+lines(v, col = 'black', lwd = 0.25)
+
+plot(ee, col = hcl.colors(50, palette = 'oslo'), axes = FALSE, main = 'Elevation (m) ~4m', legend = FALSE, mar = c(0, 0, 0, 0), smooth = TRUE)
+lines(v, col = 'white', lwd = 0.25)
+
+

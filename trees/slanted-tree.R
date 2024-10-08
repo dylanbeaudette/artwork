@@ -135,7 +135,7 @@ for(i in 1:.n) {
 
 svglite::svglite(file = 'slanted-trees.svg', width = 5, height = 4)
 
-par(mfcol = c(sqrt(.n), sqrt(.n)), fg = 'white', bg = 'black')
+par(mfcol = c(sqrt(.n), sqrt(.n)), fg = 4, bg = 'black', lwd = 2)
 
 
 for(i in 1:.n) {

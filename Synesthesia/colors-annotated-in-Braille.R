@@ -12,6 +12,8 @@
 # https://louis.aph.org/
 # https://www.afb.org/about-afb/contact-afb
 
+## note that numbers require "#" prefix in Braille
+
 
 
 library(aqp)

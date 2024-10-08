@@ -74,7 +74,7 @@ corrplot(
   method = "color", 
   order = "original",
   diag = TRUE,
-  tl.cex = 0.66,
+  tl.cex = 0.75,
   tl.col = 'white',
   mar = c(0.1, 0, 0, 0.8),
   addgrid = FALSE,
@@ -119,7 +119,40 @@ corrplot(
   addgrid = FALSE, na.label = '.', na.label.col = 'white'
 ) 
 
-# how do you suppress text labels?
+
+
+## regular log10 scale
+corrplot(
+  log(mm.no.zero[row.idx, col.idx], base = 10), 
+  col = hcl.colors(50, palette = 'zissou1'), 
+  is.corr = FALSE, 
+  col.lim = range(log(mm.no.zero, base = 10), na.rm = TRUE), 
+  method = "color", 
+  order = "original",
+  diag = TRUE,
+  tl.cex = 0.01,
+  tl.col = 'white',
+  mar = c(0.1, 0, 0, 0.8),
+  addgrid = FALSE, na.label = '.', na.label.col = 'white'
+)
+
+
+## sqrt transform
+# nope
+# corrplot(
+#   sqrt(mm.no.zero[row.idx, col.idx]), 
+#   col = hcl.colors(50, palette = 'zissou1'), 
+#   is.corr = FALSE, 
+#   col.lim = range(sqrt(mm.no.zero), na.rm = TRUE), 
+#   method = "color", 
+#   order = "original",
+#   diag = TRUE,
+#   tl.cex = 0.8,
+#   tl.col = 'white',
+#   mar = c(0.1, 0, 0, 0.8),
+#   addgrid = FALSE, na.label = '.', na.label.col = 'white'
+# ) 
+# 
 
 
 
