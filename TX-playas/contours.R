@@ -8,6 +8,12 @@ library(terra)
 library(soilDB)
 library(elevatr)
 
+
+# TX155: https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.05415,-99.58514,z14
+bb <- '-99.6457 34.0217,-99.6457 34.0896,-99.5294 34.0896,-99.5294 34.0217,-99.6457 34.0217'
+
+
+
 # https://casoilresource.lawr.ucdavis.edu/soil-properties/?prop=texture_025&lat=34.3774&lon=-101.7197&z=9
 # https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.47387,-102.12719,z13
 # https://soilmap2-1.lawr.ucdavis.edu/mike/soilweb/taxa-grid/?lat=34.47387&lon=-102.12719&zoom=9&taxa=vertisols

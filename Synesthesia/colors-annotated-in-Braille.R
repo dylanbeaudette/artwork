@@ -12,9 +12,11 @@
 # https://louis.aph.org/
 # https://www.afb.org/about-afb/contact-afb
 
-## note that numbers require "#" prefix in Braille
+# number conventions
+# * https://www.brailleauthority.org/ueb/abcs/abcs-ueb.html
+# * https://en.wikipedia.org/wiki/English_Braille#Formatting_marks
 
-
+# 20/20 [vision] is ⟨⠼⠃⠚⠌⠼⠃⠚⟩
 
 library(aqp)
 library(sharpshootR)

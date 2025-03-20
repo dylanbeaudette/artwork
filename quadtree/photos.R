@@ -21,4 +21,4 @@ plot(e)
 lines(v)
 points(s)
 
-plot(s)
+plot(s, col = 'white')
