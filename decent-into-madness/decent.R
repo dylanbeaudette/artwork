@@ -27,7 +27,7 @@ par(mar = c(0.1, 0.1, 0.1, 0.1), bg = 'black', fg = 'white', mfrow = c(.npanel, 
 # pdf(file = 'decent-into-madness.pdf', width = 12, height = 8)
 # par(mar = c(0.1, 0.1, 0.1, 0.1), mfrow = c(.npanel, .npanel))
 
-## PDF output
+## SVG output
 svglite::svglite(filename = 'decent-into-madness.svg', width = 12, height = 8)
 par(mar = c(0.1, 0.1, 0.1, 0.1), mfrow = c(.npanel, .npanel))
 
@@ -71,6 +71,8 @@ for(i in seq(.min, .max, length.out = .npanel^2)) {
 
 dev.off()
 
+# PNG output
+par(mar = c(0.1, 0.1, 0.1, 0.1), bg = 'black', fg = 'white', mfrow = c(.npanel, .npanel))
 
 x <- z$x
 
