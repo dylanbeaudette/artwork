@@ -3,9 +3,7 @@ library(RSQLite)
 
 library(aqp)
 library(scales)
-library(viridisLite)
 library(stringi)
-
 library(MetBrewer)
 
 ## move to function library / soilDB
@@ -41,13 +39,13 @@ parseSpectra <- function(.txt, compressed = TRUE) {
 base.path <- 'E:/MIR'
 
 # compressed spectra
-db.file <- file.path(base.path, 'MIR-compact-gz.sqlite')
+db.file <- file.path(base.path, 'MIR-compact-compressed.sqlite')
 
-# plain-text spectra
-db.file <- file.path(base.path, 'MIR-compact-text.sqlite')
-
-# full
-db.file <- file.path(base.path, 'MIR-compact.sqlite')
+# # plain-text spectra
+# db.file <- file.path(base.path, 'MIR-compact-text.sqlite')
+# 
+# # full
+# db.file <- file.path(base.path, 'MIR-compact.sqlite')
 
 
 db <- dbConnect(RSQLite::SQLite(), db.file)
@@ -75,7 +73,7 @@ str(x <- dbGetQuery(db, "SELECT * from mir_spec WHERE sample = '32987XS04';"))
 plot(wn, .spec, type = 'l', xlab = 'Wavenumber (1/cm)', ylab = 'Absorbance', las = 1)
 
 
-# 8000 random spectra
+# random spectra
 x <- dbGetQuery(db, "SELECT * from mir_spec LIMIT 2000;")
 
 # convenience function for converting 
@@ -93,7 +91,7 @@ d <- sweep(s, MARGIN = 1, STATS = m, FUN = '-')^2
 d <- sqrt(colSums(d))
 
 # base color palette
-cp <- mako(n = 100, direction = 1)
+cp <- hcl.colors(n = 100, palette = 'mako')
 
 # color interpolator function
 cpf <- colorRamp(cp, space = 'Lab', interpolate = 'spline')
@@ -135,5 +133,79 @@ dev.off()
 
 
 dbDisconnect(db)
+
+
+## EMD: much slower
+
+library(purrr)
+library(furrr)
+library(emdist)
+
+# median spectra
+m <- apply(s, 1, FUN = median, na.rm = TRUE)
+
+# just a subset of the total number of spectra
+.cols <- sample(1:ncol(s), size = 100)
+
+.cols <- 1:ncol(s)
+
+plan(multisession)
+
+# GFE, 100 spectra: 5 minutes
+# GFE, ~2000 spectra: 1.5 hours
+# A [weight, coordinates]
+# B [weight, coordinates]
+system.time(
+  d <- future_map_dbl(.cols, .progress = TRUE, .f = function(i) {
+    .A <- cbind(1, s[, i])
+    .B <- cbind(1, m)
+    emd(.A, .B)
+  })
+)
+
+plan(sequential)
+
+## TODO: compare with simple, RMSE-based distances
+# 
+d.sd <- sweep(s[, .cols], MARGIN = 1, STATS = m, FUN = '-')^2
+d.sd <- sqrt(colSums(d.sd))
+
+# very close
+plot(d, d.sd, las = 1, col = alpha('royalblue', alpha = 0.4))
+cor(d, d.sd)
+
+
+## percentile transform
+e <- ecdf(d)(d)
+
+# save for later
+g <- data.frame(emd = d, emd.pctile = e, rmse = d.sd)
+saveRDS(g, file = 'MIR-spectra/distance-metrics.rds')
+
+
+# base color palette
+cp <- rev(met.brewer('Hiroshige', n = 100))
+# cp <- hcl.colors('mako', n = 100)
+
+# color interpolator function
+cpf <- colorRamp(cp, space = 'Lab', interpolate = 'spline')
+
+# values -> color translation function
+cn <- col_numeric(palette = cpf, domain = range(e), alpha = FALSE)
+
+# convert values -> colors and apply transparency
+cols <- alpha(cn(e), alpha = 0.125)
+
+
+ragg::agg_png(filename = 'MIR-spectra/pretty-spectra-EMD-from-median-01.png', width = 2400, height = 1200, res = 150, scaling = 1.5)
+
+par(mar = c(0, 0, 0, 0), bg = 'black', fg = 'white')
+matplot(wn, s[, .cols], lty = 1, type ='l', col = cols, las = 1, xlab = '', ylab = '', axes = FALSE, xlim = rev(range(wn)))
+lines(wn, m, lwd = 1, col = 'white')
+
+dev.off()
+
+
+
 
 

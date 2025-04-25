@@ -47,6 +47,9 @@ drawIt <- function(n = 50, a = 0.25, shape1 = c(2, 3), shape2 = c(5, 3), ...) {
   })
   
   
+  ## TODO: maybe faster to use emd(A, B) where A,B ~ [wt, coordinates]
+  
+  
   .emDistPctiles <- ecdf(.emDist)(.emDist)
   
   .cp <- hcl.colors(n = 50, palette = 'zissou1', rev = FALSE)
