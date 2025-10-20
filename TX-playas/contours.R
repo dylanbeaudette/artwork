@@ -2,6 +2,8 @@
 ## paper from Zamir:
 # https://www.sciencedirect.com/science/article/pii/S0140196310001849
 
+# fun ideas here: https://aditya-dahiya.github.io/visage/book_solutions/chapter6.html#compilation-plot-with-magick
+
 
 library(aqp)
 library(terra)
