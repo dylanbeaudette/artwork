@@ -1,6 +1,8 @@
 # remotes::install_github("thomasp85/boundaries")
 # remotes::install_github("thomasp85/polyclid")
 
+# not able to build on linux: https://github.com/thomasp85/euclid/issues/30
+
 # https://boundaries.r-euclid.com/reference/skeleton_interior.html
 
 
