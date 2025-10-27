@@ -6,7 +6,7 @@ library(farver)
 # add an extra, dummy column name
 # remove non-row data at bottom
 # removed previous data and bogus black color
-m <- read.csv('~/Downloads/Recent Scans_colordata.csv')
+m <- read.csv('fall-colors-2025.csv')
 
 # subset
 m <- m[, c('Time.Stamp', 'L', 'A', 'B')]
