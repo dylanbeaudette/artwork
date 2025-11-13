@@ -1,7 +1,15 @@
 # remotes::install_github("thomasp85/boundaries")
 # remotes::install_github("thomasp85/polyclid")
 
-# not able to build on linux: https://github.com/thomasp85/euclid/issues/30
+# not able to build on linux: https://github.com/thomasp85/euclid/issues/31
+# also affects boundaries and polyclid
+# 
+# solution: 
+#  * remove cgalh package dependency and linkingto from all 3 package DESCRIPTION files
+#  * use system CGAL dev package includes
+#
+
+
 
 # https://boundaries.r-euclid.com/reference/skeleton_interior.html
 
@@ -149,6 +157,7 @@ b <- buffer(p, 2000, quadsegs = 20)
 # b <- buffer(p, 2000, quadsegs = 3)
 
 
+
 b <- vect(
   'POLYGON((-90.4804 38.8577,-90.4804 38.9215,-90.3517 38.9215,-90.3517 38.8577,-90.4804 38.8577))',
   crs = 'epsg:4326'
@@ -281,6 +290,7 @@ walk(seq_along(sk.i), function(i) {
   plot(sk.i[[i]], col = .cols[i], add = TRUE, axes = FALSE, lwd = 1.5)
 })
 
+lines(mu, col = 'white', lwd = 0.25)
 
 plot(mu, axes = FALSE, mar = c(0, 0, 0, 0), border = 4, lwd = 0.5, type = 'n')
 
