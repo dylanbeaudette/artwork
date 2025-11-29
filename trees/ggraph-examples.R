@@ -1,27 +1,38 @@
 
+library(aqp)
+library(soilDB)
 
+library(SoilTaxonomy)
+library(data.tree)
+library(data.table)
 
+library(ape)
+library(cluster)
 
 library(ggraph)
 library(tidygraph)
 library(purrr)
 library(rlang)
 
+library(igraph)
+
 
 # https://ggraph.data-imaginist.com/articles/Nodes.html
 # https://ggraph.data-imaginist.com/articles/Edges.html
 
 
+set_graph_style(plot_margin = margin(1, 1, 1, 1), background = 'black')
+
 tr <- create_tree(50, 5)
 
 ggraph(tr, 'dendrogram') + 
-  geom_edge_elbow(strength = 0.9)
+  geom_edge_elbow(strength = 0.9, color = 'white')
 
 ggraph(tr, 'dendrogram') + 
-  geom_edge_diagonal(strength = 0.5)
+  geom_edge_diagonal(strength = 0.5, color = 'white')
 
 ggraph(tr, 'dendrogram') + 
-  geom_edge_bend()
+  geom_edge_bend(color = 'white')
 
 
 
@@ -29,15 +40,54 @@ graph <- tbl_graph(flare$vertices, flare$edges)
 set.seed(1)
 
 ggraph(graph, 'circlepack', weight = size) + 
-  geom_node_circle(size = 0.25, n = 50) + 
+  geom_node_circle(linewidth = 0.25, color = 'white') + 
   coord_fixed()
 
 
-library(SoilTaxonomy)
-library(data.tree)
+#
+# define a vector of series
+s.list <- c('amador', 'redding', 'pentz', 'pardee', 'yolo', 'hanford', 'cecil', 'sycamore', 'KLAMATH', 'MOGLIA', 'drummer', 'musick', 'zook', 'argonaut', 'PALAU')
+
+# get and SPC object with basic data on these series
+s <- fetchOSD(s.list)
+
+# extract horizon data from select OSDs in above example
+h <- horizons(s)
+
+# convert Munsell color notation to sRGB
+# these are moist colors
+rgb.data <- munsell2rgb(h$hue, h$value, h$chroma, return_triplets = TRUE)
+lab.data <- munsell2rgb(h$hue, h$value, h$chroma, returnLAB = TRUE)
+
+# retain unique colors
+rgb.data <- unique(rgb.data)
+lab.data <- unique(lab.data)
+
+# create distance matrix from LAB coordinates
+d <- daisy(lab.data, stand = FALSE)
+
+# divisive hierarchical clustering
+d.hclust <- as.hclust(diana(d))
+
+g <- as_tbl_graph(d.hclust)
+
+
+ggraph(g, 'circlepack') + 
+  geom_node_circle(linewidth = 0.25, color = 'white') + 
+  coord_fixed()
+
+
+###
+
+
+
+# SC database
+u <- 'https://github.com/ncss-tech/SoilWeb-data/raw/refs/heads/main/files/SC-database.csv.gz'
+
 
 # subgroup acreages from SoilWeb / SSURGO
-sg.ac <- read.table(file = '../SoilWeb-data/files/taxsubgrp-stats.txt.gz', header = FALSE, sep="|")
+u <- 'https://github.com/ncss-tech/SoilWeb-data/raw/refs/heads/main/files/taxsubgrp-stats.txt.gz'
+sg.ac <- fread(file = u, header = FALSE, sep = "|")
 names(sg.ac) <- c('subgroup', 'ac', 'n_polygons')
 
 # normalize names
@@ -51,8 +101,9 @@ ST <- ST[, 1:4]
 ST <- merge(ST, sg.ac, by = 'subgroup', all.x = TRUE)
 
 # set NA acreage to 0
-ST$ac[which(is.na(ST$ac))] <- 0
+ST$ac[which(is.na(ST$ac))] <- 1
 
+ST$ac <- sqrt(ST$ac)
 
 ST$pathString <- paste('ST', ST$order, ST$suborder, ST$greatgroup, ST$subgroup, sep = '/')
 n <- as.Node(ST)
@@ -63,28 +114,44 @@ print(alf, 'ac')
 # compute acreage for parent nodes
 alf$Do(function(node) node$ac <- Aggregate(node, attribute = "ac", aggFun = sum), traversal = "post-order")
 
-# TODO: retain node attributes
 
-g <- as_tbl_graph(alf)
+# g <- as.igraph.Node(alf, vertexAttributes = 'ac')
 
-set_graph_style(plot_margin = margin(1,1,1,1))
+## TODO: simpler to manipulate as an igraph object vs. tidygraph API 
 
-ggraph(g, 'circlepack') + 
-  geom_node_circle(size = 0.25) + 
+# see arguments to as.igraph.Node()
+# preservation of node attributes
+g <- as_tbl_graph(alf, vertexAttributes = 'ac')
+
+set_graph_style(plot_margin = margin(1, 1, 1, 1), background = 'black')
+
+ggraph(g, 'circlepack', weight = ac) +
+  geom_node_circle(linewidth = 0.25, color = 'white') +
   coord_fixed()
 
 
-# un weighted
-g <- as_tbl_graph(n)
-
-set_graph_style(plot_margin = margin(1,1,1,1))
-
-ggraph(g, 'circlepack') + 
-  geom_node_circle(size = 0.25, color = 'white') + 
-  coord_fixed() +
-  theme(plot.background = element_rect(color = "black", fill = "black"))
+# 
+# compute acreage for parent nodes
+n$Do(function(node) node$ac <- Aggregate(node, attribute = "ac", aggFun = sum), traversal = "post-order")
 
 
+# see arguments to as.igraph.Node()
+# preservation of node attributes
+g <- as_tbl_graph(n, vertexAttributes = 'ac')
+
+ggraph(g, 'circlepack', weight = ac) + 
+  geom_node_circle(linewidth = 0.25, color = 'white') + 
+  coord_fixed()
+
+
+
+ggraph(g, 'treemap', weight = ac) + 
+  geom_node_tile(linewidth = 0.25, color = 'white')
+
+
+ggraph(g, layout = 'dendrogram', circular = TRUE) + 
+  geom_edge_diagonal(linewidth = 0.25, color = 'white') +
+  coord_fixed()
 
 
 ## 
