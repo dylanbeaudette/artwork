@@ -80,8 +80,9 @@ g <- as_tbl_graph(n)
 set_graph_style(plot_margin = margin(1,1,1,1))
 
 ggraph(g, 'circlepack') + 
-  geom_node_circle(size = 0.25) + 
-  coord_fixed()
+  geom_node_circle(size = 0.25, color = 'white') + 
+  coord_fixed() +
+  theme(plot.background = element_rect(color = "black", fill = "black"))
 
 
 
