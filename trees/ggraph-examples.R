@@ -80,9 +80,75 @@ ggraph(g, 'circlepack') +
 ###
 
 
+# series stats
+u <- 'https://github.com/ncss-tech/SoilWeb-data/raw/refs/heads/main/files/series_stats.csv.gz'
+s <- fread(u)
+s <- as.data.frame(s)
 
+ 
 # SC database
 u <- 'https://github.com/ncss-tech/SoilWeb-data/raw/refs/heads/main/files/SC-database.csv.gz'
+sc <- fread(u)
+sc <- as.data.frame(sc)
+
+sc <- sc[which(sc$soilseriesstatus == 'established'), ]
+
+x <- sc[which(sc$taxorder == 'alfisols'), ]
+
+x <- merge(x, s, by.x = 'soilseriesname', by.y = 'series', all.x = TRUE, sort = FALSE)
+
+
+x$pathString <- paste('ST', x$taxorder, x$taxsuborder, x$taxgrtgroup, x$taxsubgrp, x$taxclname, x$soilseriesname, sep = '/')
+
+x <- x[, c('pathString', 'soilseriesname', 'ac')]
+
+x$ac[which(is.na(x$ac))] <- 1
+
+n <- as.Node(x)
+# compute acreage for parent nodes
+n$Do(function(node) node$ac <- Aggregate(node, attribute = "ac", aggFun = sum), traversal = "post-order")
+
+print(n, 'ac')
+
+
+g <- as_tbl_graph(n, vertexAttributes = c('soilseriesname', 'ac'))
+
+
+
+set_graph_style(plot_margin = margin(1, 1, 1, 1), background = 'black')
+
+ggraph(g, layout = 'dendrogram', circular = TRUE) +
+  geom_edge_diagonal(linewidth = 0.25, color = 'white') +
+  coord_fixed()
+
+
+ggraph(g, layout = 'circlepack', circular = TRUE, weight = ac) +
+  geom_node_circle(linewidth = 0.25, color = 'white') +
+  coord_fixed()
+
+
+# what?
+ggraph(g, layout = 'circlepack', circular = TRUE, weight = ac) +
+  # geom_node_circle(linewidth = 0.25, color = 'white') +
+  geom_edge_diagonal(linewidth = 0.25, color = 'white') +
+  coord_fixed()
+
+# hmm..
+ggraph(g, layout = 'circlepack', circular = TRUE, weight = ac) +
+  geom_node_circle(linewidth = 0.25, color = 'white') +
+  # geom_edge_diagonal(linewidth = 0.25, color = 'white') +
+  geom_node_point(aes(filter = leaf), color = 'white', size = 0.1) + 
+  coord_fixed()
+
+
+## doesn't work as expected
+
+# ig <- as.igraph.Node(n)
+# .el <- as_edgelist(g)
+# 
+# ggraph(g, layout = 'circlepack', circular = TRUE) +
+#   geom_conn_bundle(data = get_con(from = .el[, 1], to = .el[, 2]),  alpha = 0, color = 'red')
+# 
 
 
 # subgroup acreages from SoilWeb / SSURGO
@@ -103,6 +169,7 @@ ST <- merge(ST, sg.ac, by = 'subgroup', all.x = TRUE)
 # set NA acreage to 0
 ST$ac[which(is.na(ST$ac))] <- 1
 
+# circle area proportional to square root of "acres mapped"
 ST$ac <- sqrt(ST$ac)
 
 ST$pathString <- paste('ST', ST$order, ST$suborder, ST$greatgroup, ST$subgroup, sep = '/')
@@ -128,6 +195,13 @@ set_graph_style(plot_margin = margin(1, 1, 1, 1), background = 'black')
 ggraph(g, 'circlepack', weight = ac) +
   geom_node_circle(linewidth = 0.25, color = 'white') +
   coord_fixed()
+
+
+ggraph(g, layout = 'dendrogram', circular = TRUE) + 
+  geom_edge_diagonal(linewidth = 0.25, color = 'white') +
+  coord_fixed()
+
+
 
 
 # 
