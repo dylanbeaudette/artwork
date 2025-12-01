@@ -77,6 +77,19 @@ ggraph(g, 'circlepack') +
   coord_fixed()
 
 
+## TODO: use actual colors
+
+# ggraph(g, 'circlepack') + 
+#   geom_node_circle(aes(filter = leaf, fill = 'white'), linewidth = 0.25) + 
+#   scale_fill_identity(h$soil_color) + 
+#   coord_fixed()
+# 
+# 
+# # ... something like this?
+# ggplot(mt, aes(mpg, disp, color = literal_color)) +
+#   geom_point() +
+#   scale_color_identity()
+
 ###
 
 
