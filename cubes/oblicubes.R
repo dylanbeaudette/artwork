@@ -10,6 +10,11 @@ library(aqp)
 library(soilDB)
 library(purrr)
 
+
+# i:      SPC length 1
+# n.sim:  number of perturbations = width of each "slab"
+# n.fuzz: jitter applied to thickness of each soil series "slab"
+
 cubit <- function(i, max.depth = 150, n.sim = 40, n.fuzz = 10, ...) {
   
   x <- fetchOSD(i, colorState = 'moist')
@@ -66,11 +71,14 @@ cubit <- function(i, max.depth = 150, n.sim = 40, n.fuzz = 10, ...) {
 
 o <- c('leon', 'musick', 'fresno', 'zook', 'amador', 'sierra', 'lucy', 'pierre', 'miami', 'drummer')
 
-z <- lapply(o, cubit, n.fuzz = 5, n.sim = 50)
+.nf <- 5
+
+z <- lapply(o, cubit, n.fuzz = .nf, n.sim = 50)
 z <- transpose(z)
 
+# spacing between soil series "slabs"
 for(i in seq_along(z$coords)) {
-  .inc <- (i-1) * 5
+  .inc <- (i-1) * .nf
   z$coords[[i]]$z <- z$coords[[i]]$z - .inc
 }
 
@@ -78,18 +86,27 @@ for(i in seq_along(z$coords)) {
 z.c <- do.call('rbind', z$coords)
 z.f <- do.call('c', z$fill)
 
+# 2025-12-31: 
+#            * use xyplane = 'right' for proper depth orientation
+#            * may require tinkering with x, y when plotting to PNG
 cubes <- isocubesGrob(
   coords = z.c,
   fill = z.f,
-  max_y = 100,
-  occlusion_depth = 4,
-  col = NA, 
-  xo = 0.2,
-  yo = 0.2,
-  verbose = TRUE
+  col = 'black', 
+  lwd = 0.1,
+  verbosity = 1,
+  intensity = c(1, 0.3, 0.7), # top, left, right,
+  size = 1.5, 
+  default.units = 'mm',
+  xyplane = 'right',
+  x = 0.5, 
+  y = 0
 )
+
+ragg::agg_png(filename = 'cubes.png', width = 1200, height = 800, scaling = 2)
 
 grid.newpage()
 grid.draw(cubes)
 
+dev.off()
 

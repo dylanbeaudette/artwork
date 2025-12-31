@@ -1,5 +1,6 @@
-# remotes::install_github("thomasp85/boundaries")
+# remotes::install_github("thomasp85/euclid")
 # remotes::install_github("thomasp85/polyclid")
+# remotes::install_github("thomasp85/boundaries")
 
 # not able to build on linux: https://github.com/thomasp85/euclid/issues/31
 # also affects boundaries and polyclid
