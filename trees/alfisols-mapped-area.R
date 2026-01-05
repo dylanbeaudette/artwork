@@ -70,6 +70,17 @@ ggraph(g, layout = 'circlepack', circular = TRUE, weight = ac) +
   coord_fixed()
 
 
+# !! 29MB SVG... way too complicated
+svglite::svglite(filename = 'circles-series-ac.svg', width = 8, height = 8)
+
+ggraph(g, layout = 'circlepack', circular = TRUE, weight = ac) +
+  geom_node_circle(linewidth = 0.25, color = 'white') +
+  coord_fixed()
+
+dev.off()
+
+
+
 .pal <- hcl.colors(25, 'vik')
 
 ggraph(g, layout = 'circlepack', circular = TRUE, weight = ac) +
