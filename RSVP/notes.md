@@ -121,12 +121,8 @@ D047 71EF 52BA DFAA
 
 
 
-
-## GPG
-
-encrypt (asdf)
- * gpg --symmetric --cipher-algo AES256 | base64
-
+## TODO:
+ * getting cypher text into a device for decryption
 
 
 
