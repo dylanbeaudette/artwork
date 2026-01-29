@@ -42,13 +42,13 @@ source('local-functions.R')
 
 # no compression
 # encode -> format
-cat(e <- rsvp_e('all work and no play makes jack a dull boy', key = 'ASDF', compress = 'none'))
+cat(e <- rsvp_e('all work and no play makes jack a dull boy.', key = 'ASDF', compress = 'none'))
 rsvp_d(e, key = 'ASDF', compress = 'none')
 
 
 # overhead not worth the compression for short messages
 # gzip -> encode -> format
-cat(e <- rsvp_e('all work and no play makes jack a dull boy', key = 'ASDF', compress = 'gzip'))
+cat(e <- rsvp_e('all work and no play makes jack a dull boy.', key = 'ASDF', compress = 'gzip'))
 rsvp_d(e, key = 'ASDF', compress = 'gzip')
 
 

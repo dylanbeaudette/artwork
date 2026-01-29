@@ -93,6 +93,9 @@ rsvp_e <- function(plaintext, key, blocksize = 4, ncolumn = 4, compress = 'none'
   # format hex byte string => blocks
   bl <- formatBlocks(txt, bs = blocksize, nc = ncolumn)
   
+  # upper case
+  bl <- toupper(bl)
+  
   # diagnostics
   .bloatfactor <- round(nchar(bl) / nchar(plaintext), 1)
   .msg <- sprintf("characters:   %s\nbloat factor: %s", nchar(bl), .bloatfactor)
