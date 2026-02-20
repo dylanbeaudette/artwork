@@ -1,3 +1,10 @@
+
+## TODO axidraw:
+## * enforce clipping within figure boxes: SVG output extends beyond figure
+## * lines too dense for pen plotting at n = 50
+
+
+
 library(purrr)
 library(emdist)
 library(scales)
@@ -64,7 +71,7 @@ drawIt <- function(n = 50, a = 0.25, shape1 = c(2, 3), shape2 = c(5, 3), ...) {
     lines(.x, .curves[[i]]$dens, col = .cols[i], ...)
   })
   
-  
+  # mean curve
   lines(.x, .meanBeta, col = alpha('white', alpha = 0.75), lwd = 1.5, lty = 2)
   
 }
@@ -79,10 +86,15 @@ for(i in seq(0, 10, length.out = 9)) {
   drawIt(shape1 = c(i, 6), a = 0.5, n = 60)
 }
 
+svglite::svglite(filename = 'beta-01.svg', width = 8, height = 6)
+
+par(mar = c(0, 0, 0, 0), bg = 'black', fg = 'white', mfrow = c(3, 3))
+
 for(i in seq(0, 8, length.out = 9)) {
   drawIt(shape2 = c(i, 3), a = 0.5, n = 60)
 }
 
+dev.off()
 
 
 
