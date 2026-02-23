@@ -11,10 +11,13 @@ library(soilDB)
 library(elevatr)
 
 
+# TX189
+# https://casoilresource.lawr.ucdavis.edu/gmap/?loc=33.97803,-102.06556,z14
+bb <- '-102.1391 33.9449,-102.1391 34.0115,-101.9894 34.0115,-101.9894 33.9449,-102.1391 33.9449'
+
+
 # TX155: https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.05415,-99.58514,z14
 bb <- '-99.6457 34.0217,-99.6457 34.0896,-99.5294 34.0896,-99.5294 34.0217,-99.6457 34.0217'
-
-
 
 # https://casoilresource.lawr.ucdavis.edu/soil-properties/?prop=texture_025&lat=34.3774&lon=-101.7197&z=9
 # https://casoilresource.lawr.ucdavis.edu/gmap/?loc=34.47387,-102.12719,z13
@@ -147,7 +150,7 @@ plot(ee, col = hcl.colors(50, palette = 'oslo', rev = TRUE), axes = FALSE, main 
 v <- as.contour(ee, levels = quantile(values(ee), na.rm = TRUE, prob = seq(0, 1, by = 0.025)))
 
 par(mfcol = c(1, 1), bg = 'black')
-plot(v, col = hcl.colors(n = nrow(v), palette = 'zissou1'), mar = c(0, 0, 0, 0), lwd = 2, axes = FALSE)
+plot(v, col = hcl.colors(n = nrow(v), palette = 'zissou1'), mar = c(0, 0, 0, 0), lwd = 1, axes = FALSE)
 
 ex <- as.polygons(ext(v))
 lines(ex, col = 'white', lwd = 0.5)
