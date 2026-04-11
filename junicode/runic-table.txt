@@ -1,0 +1,75 @@
+16A0	ᚠ	FEHU FEOH FE F	Yes	Yes	Yes	Yes	Yes	Yes
+16A1	ᚡ	V					Yes	
+16A2	ᚢ	URUZ UR U	Yes	Yes	Yes	Yes	Yes	Yes
+16A3	ᚣ	YR		Yes				
+16A4	ᚤ	Y					Yes	
+16A5	ᚥ	W					Yes[h]	
+16A6	ᚦ	THURISAZ THURS THORN	Yes	Yes	Yes	Yes	Yes	Yes
+16A7	ᚧ	ETH					Yes	
+16A8	ᚨ	ANSUZ A	Yes	Yes[i]				
+16A9	ᚩ	OS O		Yes				
+16AA	ᚪ	AC A		Yes				
+16AB	ᚫ	AESC		Yes				
+16AC	ᚬ	LONG-BRANCH-OSS O			Yes			
+16AD	ᚭ	SHORT-TWIG-OSS O				Yes		
+16AE	ᚮ	O					Yes	
+16AF	ᚯ	OE					Yes	Yes
+16B0	ᚰ	ON					Yes[j]	
+16B1	ᚱ	RAIDO RAD REID R	Yes	Yes	Yes	Yes	Yes	Yes
+16B2	ᚲ	KAUNA	Yes					
+16B3	ᚳ	CEN		Yes				
+16B4	ᚴ	KAUN K			Yes	Yes	Yes	Yes
+16B5	ᚵ	G					Yes	
+16B6	ᚶ	ENG					Yes[k]	
+16B7	ᚷ	GEBO GYFU G	Yes	Yes				Yes[l]
+16B8	ᚸ	GAR		Yes				
+16B9	ᚹ	WUNJO WYNN W	Yes	Yes				Yes
+16BA	ᚺ	HAGLAZ H	Yes					
+16BB	ᚻ	HAEGL H		Yes				
+16BC	ᚼ	LONG-BRANCH-HAGALL H			Yes			Yes
+16BD	ᚽ	SHORT-TWIG-HAGALL H				Yes		
+16BE	ᚾ	NAUDIZ NYD NAUD N	Yes	Yes	Yes			
+16BF	ᚿ	SHORT-TWIG-NAUD N				Yes	Yes	Yes
+16C0	ᛀ	DOTTED-N					Yes[m]	
+16C1	ᛁ	ISAZ IS ISS I	Yes	Yes	Yes	Yes	Yes	Yes
+16C2	ᛂ	E					Yes	
+16C3	ᛃ	JERAN J	Yes					
+16C4	ᛄ	GER		Yes				
+16C5	ᛅ	LONG-BRANCH-AR AE			Yes		Yes	Yes
+16C6	ᛆ	SHORT-TWIG-AR A				Yes	Yes	Yes
+16C7	ᛇ	IWAZ EOH	Yes	Yes				
+16C8	ᛈ	PERTHO PEORTH P	Yes	Yes				
+16C9	ᛉ	ALGIZ EOLHX	Yes	Yes				
+16CA	ᛊ	SOWILO S	Yes					
+16CB	ᛋ	SIGEL LONG-BRANCH-SOL S		Yes	Yes		Yes	Yes
+16CC	ᛌ	SHORT-TWIG-SOL S				Yes	Yes	Yes
+16CD	ᛍ	C					Yes	
+16CE	ᛎ	Z					Yes	
+16CF	ᛏ	TIWAZ TIR TYR T	Yes	Yes	Yes			
+16D0	ᛐ	SHORT-TWIG-TYR T				Yes	Yes	Yes
+16D1	ᛑ	D					Yes	
+16D2	ᛒ	BERKANAN BEORC BJARKAN B	Yes	Yes	Yes		Yes	Yes
+16D3	ᛓ	SHORT-TWIG-BJARKAN B				Yes		
+16D4	ᛔ	DOTTED-P					Yes	
+16D5	ᛕ	OPEN-P					Yes	
+16D6	ᛖ	EHWAZ EH E	Yes	Yes				
+16D7	ᛗ	MANNAZ MAN M	Yes	Yes				
+16D8	ᛘ	LONG-BRANCH-MADR M			Yes		Yes	Yes
+16D9	ᛙ	SHORT-TWIG-MADR M				Yes	Yes	
+16DA	ᛚ	LAUKAZ LAGU LOGR L	Yes	Yes	Yes	Yes	Yes	Yes
+16DB	ᛛ	DOTTED-L					Yes[n]	
+16DC	ᛜ	INGWAZ	Yes					
+16DD	ᛝ	ING		Yes				
+16DE	ᛞ	DAGAZ DAEG D	Yes	Yes				
+16DF	ᛟ	OTHALAN ETHEL O	Yes	Yes				
+16E0	ᛠ	EAR		Yes				Yes
+16E1	ᛡ	IOR		Yes				
+16E2	ᛢ	CWEORTH		Yes				
+16E3	ᛣ	CALC		Yes				
+16E4	ᛤ	CEALC		Yes				
+16E5	ᛥ	STAN		Yes				
+16E6	ᛦ	LONG-BRANCH-YR			Yes		Yes	Yes
+16E7	ᛧ	SHORT-TWIG-YR				Yes		
+16E8	ᛨ	ICELANDIC-YR					Yes	
+16E9	ᛩ	Q					Yes	Yes
+16EA	ᛪ	X					Yes	
