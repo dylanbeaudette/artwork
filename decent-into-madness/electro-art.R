@@ -15,7 +15,7 @@ x <- abs(jitter(x, factor = 5))
 
 ## artistic effects more interesting without pre-sort
 # data should be pre-sorted
-# (x <- sort(x))
+(x <- sort(x))
 
 ## effect of q
 # for(i in 1:(.npanel^2)) {
@@ -41,8 +41,8 @@ for(i in seq(0.1, 1.5, length.out = .npanel^2)) {
 # dev.off()
 
 
-## variable q
-for(i in seq(0.3, 1, length.out = .npanel^2)) {
+## variable q: increasing mean
+for(i in seq(0.3, 1.3, length.out = .npanel^2)) {
   
   cols <- hcl.colors(n = 9, palette = 'Zissou 1', rev = TRUE)
   cols <- colorRampPalette(cols)(length(x))
@@ -64,7 +64,7 @@ for(i in seq(0.3, 1, length.out = .npanel^2)) {
 }
 
 
-## variable q
+## variable q: constant mean
 for(i in 1:.npanel^2) {
   
   cols <- hcl.colors(n = 9, palette = 'Zissou 1', rev = TRUE)
@@ -90,7 +90,7 @@ for(i in 1:.npanel^2) {
 
 
 # effect of chargeDecay
-for(i in seq(0, 0.5, length.out = .npanel^2)) {
+for(i in seq(0, 0.2, length.out = .npanel^2)) {
   
   
   cols <- hcl.colors(n = 9, palette = 'Zissou 1', rev = TRUE)
@@ -99,7 +99,7 @@ for(i in seq(0, 0.5, length.out = .npanel^2)) {
   ## TODO: argument for uniform spacing attractive force schedule
   ## TODO: argument for pre-sorting
   
-  z <- fixOverlap(x, thresh = 2, q = 2, chargeDecay = i, QkA_GrowthRate = 0.05, method = 'E', maxIter = 100, trace = TRUE)
+  z <- fixOverlap(x, thresh = 2, q = 1.25, chargeDecay = i, QkA_GrowthRate = 0.05, method = 'E', maxIter = 100, trace = TRUE)
   .n <- nrow(z$states)
   
   matplot(rbind(x, z$states), type = 'l', lty = 1, las = 1, axes = FALSE, col = cols, lwd = 1, log = 'x')
@@ -124,7 +124,7 @@ for(i in seq(0, 0.5, length.out = .npanel^2)) {
   ## TODO: argument for uniform spacing attractive force schedule
   ## TODO: argument for pre-sorting
   
-  z <- fixOverlap(x, thresh = 2, q = 1, chargeDecay = 0.05, QkA_GrowthRate = i, method = 'E', maxIter = 100, trace = TRUE)
+  z <- fixOverlap(x, thresh = 2, q = 1, chargeDecay = 0.01, QkA_GrowthRate = i, method = 'E', maxIter = 100, trace = TRUE)
   .n <- nrow(z$states)
   
   matplot(rbind(x, z$states), type = 'l', lty = 1, las = 1, axes = FALSE, col = cols, lwd = 1, log = 'x', xlab = '', ylab = '')
@@ -147,7 +147,7 @@ for(i in seq(0.5, 4, length.out = .npanel^2)) {
   ## TODO: argument for uniform spacing attractive force schedule
   ## TODO: argument for pre-sorting
   
-  z <- fixOverlap(x, thresh = i, q = 1, chargeDecay = 0.01, QkA_GrowthRate = 0.05, method = 'E', maxIter = 100, trace = TRUE)
+  z <- fixOverlap(x, thresh = i, q = 0.9, chargeDecay = 0.01, QkA_GrowthRate = 0.05, method = 'E', maxIter = 100, trace = TRUE)
   .n <- nrow(z$states)
   
   matplot(rbind(x, z$states), type = 'l', lty = 1, las = 1, axes = FALSE, col = cols, lwd = 1, log = 'x')
