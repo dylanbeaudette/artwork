@@ -5,6 +5,7 @@ library(aqp)
 library(scales)
 library(stringi)
 library(MetBrewer)
+library(PNWColors)
 
 ## move to function library / soilDB
 ## TODO: slow for n > 1000
@@ -74,7 +75,11 @@ plot(wn, .spec, type = 'l', xlab = 'Wavenumber (1/cm)', ylab = 'Absorbance', las
 
 
 # random spectra
+# x <- dbGetQuery(db, "SELECT * from mir_spec ORDER BY RANDOM() LIMIT 2000;")
+
+# or, use the same 2,000
 x <- dbGetQuery(db, "SELECT * from mir_spec LIMIT 2000;")
+
 
 # convenience function for converting 
 s <- parseSpectra(x$spec, compressed = TRUE)
@@ -93,11 +98,17 @@ d <- sqrt(colSums(d))
 # base color palette
 cp <- hcl.colors(n = 100, palette = 'mako')
 
+# cp <- pnw_palette('Sailboat', n = 100)
+
 # color interpolator function
 cpf <- colorRamp(cp, space = 'Lab', interpolate = 'spline')
 
+
 # values -> color translation function
 cn <- col_numeric(palette = cpf, domain = range(d), alpha = FALSE)
+
+# values -> color translation function
+cn <- col_quantile(palette = cpf, domain = range(d), alpha = FALSE, n = 10)
 
 # convert values -> colors and apply transparency
 cols <- alpha(cn(d), alpha = 0.125)
